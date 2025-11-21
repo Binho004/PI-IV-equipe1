@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Mentor.io</div>
+        <nav>
+            <a href="#" class="active"><i></i> Home</a>
+            <a href="#"><i class="fas fa-users"></i> Salas</a>
+            <a href="#"><i ></i> Notificações</a>
+            <a href="#"><i></i> Perfil</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+        <section class="criar-seção-de-conteudo">
+            <div class="criar-post">
+                <textarea placeholder="O que está acontecendo?"></textarea>
+                <div class="actions">
+                    <button class="btn-post"><i></i> Postar</button>
+                </div>
+            </div>
+            
+            <div class="criar-sala">
+                <h3>Criar Nova Sala</h3>
+                <div class="opcoes-sala">
+                    <button class="btn-room public"><i></i> Sala Pública</button>
+                    <button class="btn-room private"><i></i> Sala Privada</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="feed">
+            <h2>Feed de Postagens</h2>
+
+            <article class="post">
+                <div class="post-header">
+                    <img src="https://via.placeholder.com/40/007bff/ffffff?text=U" alt="Foto do Usuário" class="avatar">
+                    <div class="user-info">
+                        <strong>Usuário Exemplo</strong>
+                        <span class="timestamp">há 5 minutos</span>
+                    </div>
+                    <button class="btn-delete" title="Excluir Post"><i></i></button>
+                </div>
+                
+                <div class="post-content">
+                    <p>Olá, mundo! Esta é a minha primeira postagem na nova rede social. Animado para as novas funcionalidades!</p>
+                </div>
+
+                <div class="post-actions">
+                    <button class="action-btn like"><i></iclass=> Curtir</button>
+                    <button class="action-btn comment"><i></iclass=> Responder</button>
+                    <button class="action-btn repost"><i></iss=> Repostar</button>
+                    <button class="action-btn share"><i></i=> Compartilhar</button>
+                </div>
+            </article>
+
+            <article class="post">
+                <div class="post-header">
+                    <img src="https://via.placeholder.com/40/28a745/ffffff?text=A" alt="Foto de Outro Usuário" class="avatar">
+                    <div class="user-info">
+                        <strong>Amigo_Tech</strong>
+                        <span class="timestamp">há 2 horas</span>
+                    </div>
+                    </div>
+                
+                <div class="post-content">
+                    <p>Adorei o novo design! As salas parecem ser uma ótima maneira de organizar grupos de estudo. #DesenvolvimentoWeb #CSS</p>
+                </div>
+
+                <div class="post-actions">
+                    <button class="action-btn like liked"><i></i> 12 Curtidas</button>
+                    <button class="action-btn comment"><i></i=> 4 Respostas</button>
+                    <button class="action-btn repost"><i></i> Repostar</button>
+                    <button class="action-btn share"><i></i=> Compartilhar</button>
+                </div>
+            </article>
+
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>

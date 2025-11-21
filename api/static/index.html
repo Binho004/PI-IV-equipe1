@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentor.io</title>
+  <link rel="stylesheet" href="static/style/pagina_inicial.css">
+</head>
+<body>
+  <div class="sidebar-esquerda">
+    <div class="logo-sidebar"></div>
+  </div>
+
+  <div class="sidebar-direita">
+    <div class="form-acesso">
+      <h2>Acesso</h2>
+      <form>
+        <label for="email_login">E-mail:</label>
+        <input type="email" id="email_login" name="email_login" required>
+
+        <label for="senha_login">Senha:</label>
+        <input type="password" id="senha_login" name="senha_login" required>
+
+        <button type="submit">Entrar</button>
+      </form>
+
+      <p class="link-primeiro-acesso" onclick="abrirCadastro()">Primeiro Acesso</p>
+    </div>
+
+    <div id="cadastro-barra" class="cadastro-barra">
+      <h2>Cadastro</h2>
+      <form>
+         <label for="nome_usuario">Usuário:</label>
+      <input type="text" id="nome_usuario" name="nome_usuario" required />
+      <label for="email_cadastro">E-mail:</label>
+      <input type="email" id="email_cadastro" name="email" required />
+      <label for="senha_cadastro">Senha:</label>
+      <input type="password" id="senha_cadastro" name="senha" required />
+      <label for="confirmar-senha">Confirmar Senha</label>
+      <input type="password" id="confirmar-senha" name="confirmar-senha" required />
+      <button type="submit">Cadastrar</button>
+      <button type="button" class="btn-fechar" onclick="fecharCadastro()">Fechar</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="static/script/inicio.js"></script>
+</body>
+</html>

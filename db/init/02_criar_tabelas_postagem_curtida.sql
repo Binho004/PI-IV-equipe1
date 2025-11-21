@@ -1,0 +1,21 @@
+-- -- Tabela de postagens (compatível com `Postagem.__tablename__ = 'postagens'`)
+-- CREATE TABLE IF NOT EXISTS postagens (
+-- 	id INT AUTO_INCREMENT PRIMARY KEY,
+-- 	usuario_id INT NOT NULL,
+-- 	conteudo TEXT NOT NULL,
+-- 	curtidas INT DEFAULT 0,
+-- 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+-- 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+-- 	FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE ON UPDATE CASCADE
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- -- Tabela de curtidas (likes)
+-- CREATE TABLE IF NOT EXISTS curtida (
+-- 	id INT AUTO_INCREMENT PRIMARY KEY,
+-- 	usuario_id INT NOT NULL,
+-- 	postagem_id INT NOT NULL,
+-- 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+-- 	FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE ON UPDATE CASCADE,
+-- 	FOREIGN KEY (postagem_id) REFERENCES postagens(id) ON DELETE CASCADE ON UPDATE CASCADE,
+-- 	CONSTRAINT uq_curtida_usuario_postagem UNIQUE (usuario_id, postagem_id)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

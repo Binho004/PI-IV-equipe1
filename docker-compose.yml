@@ -1,0 +1,56 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_dev
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_pass
+      TZ: America/Fortaleza
+    ports:
+      - "1542:3306" 
+    command: [
+      "--default-authentication-plugin=mysql_native_password",
+      "--character-set-server=utf8mb4",
+      "--collation-server=utf8mb4_unicode_ci"
+    ]
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-uroot", "-proot123"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
+
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: backend_api
+    restart: always
+    ports:
+      - "1541:5000"
+    environment:
+      FLASK_ENV: development
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 3306
+      DATABASE_USER: app_user
+      DATABASE_PASSWORD: app_pass
+      DATABASE_NAME: app_db
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./api:/app
+    # Aguarda até que o MySQL aceite conexões antes de iniciar o backend.
+    # Usa um pequeno loop Python (disponível na imagem base) para checar a porta 3306.
+    command: ["sh", "-c", "python -c \"import socket, time\nwhile True:\n try:\n  s=socket.create_connection(('mysql',3306),2); s.close(); break\n except Exception:\n  time.sleep(1)\n\" && exec gunicorn -w 2 -b 0.0.0.0:5000 app:app"]
+
+
+volumes:
+  db_data:
