@@ -10,10 +10,9 @@ from routes.chat_routes import chat_bp
 from routes.post_routes import post_bp
 from routes.search_routes import search_bp
 
+
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
-
-app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 default_sqlite = 'sqlite:///mentor.db'
 

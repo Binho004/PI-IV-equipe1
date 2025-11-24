@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Salas - Mentor.io</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/home.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Mentor.io</div>
+        <nav>
+            <a href="/home"><i class="fas fa-home"></i> Home</a> 
+            <a href="/salas" class="active"><i class="fas fa-users"></i> Salas</a>
+            <a href="#"><i class="fas fa-bell"></i> Notificações</a>
+            <a href="#"><i class="fas fa-user-circle"></i> Perfil</a> 
+        </nav>
+    </header>
+
+    <main class="container">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Salas de Estudo Disponíveis</h2>
+            <a href="/salas/criar" class="btn-post" style="text-decoration: none; padding: 10px 20px;">+ Nova Sala</a>
+        </div>
+
+        <section id="lista-salas" class="feed">
+            </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='script/salas.js') }}"></script>
+</body>
+</html>
