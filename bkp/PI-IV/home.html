@@ -13,10 +13,20 @@
     <header class="navbar">
         <div class="logo">Mentor.io</div>
         <nav>
-            <a href="#" class="active"><i class="fas fa-home"></i> Home</a> 
-            <a href="#"><i class="fas fa-users"></i> Salas</a>
-            <a href="#"><i class="fas fa-bell"></i> Notificações</a>
-            <a href="#"><i class="fas fa-user-circle"></i> Perfil</a> 
+            <a href="/home" class="active"><i class="fas fa-home"></i> Home</a> 
+            <a href="/salas"><i class="fas fa-users"></i> Salas</a>
+            
+            <div style="display: inline-block; margin-left: 20px;">
+                <span id="nome-usuario-display" style="font-weight: bold; margin-right: 10px;">Visitante</span>
+                
+                <button onclick="toggleTheme()" style="background:none; border:none; cursor:pointer; font-size: 18px;" title="Mudar Tema">
+                    🌓
+                </button>
+                
+                <button onclick="logout()" style="background:none; border:none; cursor:pointer; font-size: 18px; color: red;" title="Sair">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
         </nav>
     </header>
 

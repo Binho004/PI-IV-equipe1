@@ -1,69 +1,96 @@
+// Funções visuais (Abrir/Fechar cadastro)
 function abrirCadastro() {
-  document.getElementById('cadastro-barra').style.right = '0';
+    const barra = document.getElementById('cadastro-barra');
+    barra.classList.add('ativo');
 }
 
 function fecharCadastro() {
-  document.getElementById('cadastro-barra').style.right = '-100%';
+    const barra = document.getElementById('cadastro-barra');
+    barra.classList.remove('ativo');
 }
 
-// LOGIN
-document.querySelector('.form-acesso form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  // const formData = new FormData(e.target);
-  const email = document.getElementById("email_login").value.trim();
-  const senha = document.getElementById("senha_login").value.trim();
-  
+document.addEventListener('DOMContentLoaded', () => {
+    // --- LÓGICA DE LOGIN ---
+    const loginForm = document.getElementById("loginForm");
+    
+    if (loginForm) {
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("email").value.trim();
+            const senha = document.getElementById("senha").value.trim();
 
-  try {
-    const res = await fetch('/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, senha }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+            if (!email || !senha) {
+                alert("Preencha todos os campos de login.");
+                return;
+            }
 
-    const data = await res.json();
-    alert(data.message);
+            try {
+                // Usa rota relativa (funciona local e online)
+                const response = await fetch('/login', { 
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, senha }),
+                });
 
-    if (res.ok) {
-      window.location.href = '/home';
+                const data = await response.json();
+                
+                if (response.ok) {
+                    localStorage.setItem("usuario_id", data.id);
+                    localStorage.setItem("nome_usuario", data.nome_usuario);
+                    
+                    window.location.href = "/home"; 
+                } else {
+                    alert(data.message || "Erro ao fazer login");
+                }
+            } catch (error) {
+                console.error("Erro de conexão:", error);
+                alert("Erro ao conectar com o servidor.");
+            }
+        });
     }
-  } catch (err) {
-    alert('Erro ao conectar com a API');
-  }
-});
 
-// CADASTRO
-document.querySelector('#cadastro-barra form').addEventListener('submit', async (e) => {
-  e.preventDefault();
+    // --- LÓGICA DE CADASTRO ---
+    const cadastroForm = document.getElementById("cadastroForm");
 
-  const nome_usuario = document.getElementById("nome_usuario").value.trim();
-  const email = document.getElementById("email_cadastro").value.trim();
-  const senha = document.getElementById("senha_cadastro").value.trim();
+    if (cadastroForm) {
+        cadastroForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-  try {
-    const res = await fetch('/cadastro', {
-      method: 'POST',
-      body: JSON.stringify({
-        nome_usuario,
-        email,
-        senha
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+            const nome_usuario = document.getElementById("nome_usuario").value.trim();
+            const email = document.getElementById("email_cadastro").value.trim();
+            const senha = document.getElementById("senha_cadastro").value.trim();
+            const confirmar_senha = document.getElementById("confirmar-senha").value.trim();
 
-    const data = await res.json();
-    alert(data.message);
+            if (!nome_usuario || !email || !senha || !confirmar_senha) {
+                alert("Preencha todos os campos de cadastro.");
+                return;
+            }
 
-    if (res.ok) {
-      fecharCadastro();
-      e.target.reset();
-      window.location.href = '/home';
+            if (senha !== confirmar_senha) {
+                alert("As senhas não coincidem!");
+                return;
+            }
+
+            try {
+                const response = await fetch('/cadastro', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nome_usuario, email, senha }),
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert("Cadastro realizado com sucesso!");
+                    cadastroForm.reset();
+                    fecharCadastro();
+                } else {
+                    alert(data.message || "Erro ao cadastrar");
+                }
+            } catch (error) {
+                console.error("Erro de conexão:", error);
+                alert("Erro ao conectar com o servidor.");
+            }
+        });
     }
-  } catch (err) {
-    alert('Erro ao conectar com a API');
-  }
 });

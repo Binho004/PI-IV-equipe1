@@ -1,4 +1,6 @@
 from flask import Blueprint, request, jsonify, render_template
+from models import Mensagem 
+from database import db    
 
 chat_bp = Blueprint('chat_bp', __name__)
 
@@ -103,30 +105,35 @@ def chat_page(room_id):
 
 # --- SISTEMA DE MENSAGENS ---
 
-MESSAGES = [] 
 
-#Enviar mensagem
 @chat_bp.route('/api/chat/<int:room_id>/messages', methods=['POST'])
 def send_message(room_id):
     data = request.get_json()
     text = data.get('text')
+    # Pega o usuário enviado pelo JS, ou usa Anônimo se falhar
+    username = data.get('user', 'Usuário Anônimo') 
     
     if not text:
         return jsonify({'error': 'Mensagem vazia'}), 400
 
-    new_msg = {
-        'room_id': room_id,
-        'user': 'Usuário Anônimo', # Futuramente pegamos do login
-        'text': text,
-        'time': 'Agora' # Futuramente usamos datetime
-    }
+    new_msg = Mensagem(
+        room_id=room_id,
+        user=username,
+        text=text
+    )
     
-    MESSAGES.append(new_msg)
-    return jsonify(new_msg), 201
+    db.session.add(new_msg)
+    db.session.commit()
+    
+    return jsonify(new_msg.to_dict()), 201
 
-# API: Ler mensagens da sala
+# Ler mensagens da sala
 @chat_bp.route('/api/chat/<int:room_id>/messages', methods=['GET'])
 def get_messages(room_id):
-    # Filtra apenas as mensagens DESSA sala específica
-    room_msgs = [m for m in MESSAGES if m['room_id'] == room_id]
-    return jsonify(room_msgs)
+    # Busca no Banco de Dados filtrando pela sala
+    messages_db = Mensagem.query.filter_by(room_id=room_id).order_by(Mensagem.timestamp).all()
+    
+
+    messages_list = [msg.to_dict() for msg in messages_db]
+    
+    return jsonify(messages_list)

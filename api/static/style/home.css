@@ -12,12 +12,13 @@ body {
     color: #1c1e21;
 }
 
+/* --- NAVBAR --- */
 .navbar {
     background-color: #ffffff;
     border-bottom: 1px solid #ddd;
     padding: 10px 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* Empurra os itens do menu para a direita */
     align-items: center;
     position: sticky;
     top: 0;
@@ -28,7 +29,20 @@ body {
 .logo {
     font-size: 24px;
     font-weight: 700;
-    color: #007bff; 
+    color: #007bff;
+    /* Centralização Absoluta */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-decoration: none;
+}
+
+/* Ajuste para garantir que o menu não fique "em cima" do logo */
+.navbar nav {
+    display: flex;
+    align-items: center;
+    z-index: 1001; 
+    background: white; /* Proteção visual no modo claro */
 }
 
 .navbar nav a {
@@ -50,6 +64,7 @@ body {
     border-radius: 0;
 }
 
+/* --- LAYOUT --- */
 .container {
     max-width: 900px; 
     margin: 20px auto;
@@ -84,6 +99,7 @@ body {
     justify-content: flex-end;
 }
 
+/* --- BOTÕES --- */
 .btn-post {
     background-color: #007bff;
     color: white;
@@ -135,6 +151,7 @@ body {
     opacity: 0.85;
 }
 
+/* --- FEED --- */
 .feed h2 {
     margin-bottom: 10px;
     color: #555;
@@ -228,4 +245,73 @@ body {
 
 .btn-acao.curtir.curtido { 
     color: #dc3545; 
+}
+
+/* --- DARK MODE GERAL --- */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Fundo dos cartões e containers */
+/* ADICIONADO: .navbar nav na lista abaixo */
+body.dark-mode .navbar,
+body.dark-mode .navbar nav, 
+body.dark-mode .criar-secao-conteudo,
+body.dark-mode .postagem,
+body.dark-mode .chat-container,
+body.dark-mode .chat-header,
+body.dark-mode .msg-bubble,
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select { 
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border-color: #333;
+}
+
+/* Textos fortes */
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode strong,
+body.dark-mode .logo,
+body.dark-mode .info-usuario strong {
+    color: #ffffff;
+}
+
+/* Links da Navbar */
+body.dark-mode .navbar nav a {
+    color: #bbb;
+}
+body.dark-mode .navbar nav a.active {
+    color: #007bff;
+}
+
+/* Fundo da área de mensagens no chat */
+body.dark-mode .chat-messages {
+    background-color: #0f0f0f; 
+}
+
+/* --- CORREÇÕES DE TEXTO NO DARK MODE --- */
+
+/* Texto dentro da caixa de escrever */
+body.dark-mode textarea {
+    background-color: #2c2c2c;
+    color: #ffffff !important; /* Força letra branca */
+    border: 1px solid #444;
+}
+
+/* Texto da postagem (o "eh isso") */
+body.dark-mode .conteudo-post p {
+    color: #e0e0e0;
+}
+
+/* Nome do usuário na postagem */
+body.dark-mode .info-usuario strong {
+    color: #ffffff;
+}
+
+/* Placeholder (o texto "O que está acontecendo?") */
+body.dark-mode textarea::placeholder {
+    color: #bbbbbb;
 }

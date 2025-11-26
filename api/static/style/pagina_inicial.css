@@ -6,114 +6,185 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #FFFFFF;
+  background: #ffffff;
   display: flex;
-  height: 100vh;
+  /* Usar min-height é melhor que height para evitar cortes em telas pequenas */
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
+/* --- LADO ESQUERDO (LOGO) --- */
 .sidebar-esquerda {
-  width: 50%;
-  height: 100vh;
-  background: #fffefe;
+  width: 70%;
+  min-height: 100vh; /* Garante altura total */
+  background: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
+  /* Mudei de border-left para border-right para servir de separador */
+  border-right: 3px solid #1abc9c;
 }
 
 .logo-sidebar {
-  width: 600px;
-  height: 600px;
-  background-image: url('../imagens/logo.png');
+  /* Usar porcentagem e max-width torna o logo responsivo em telas médias */
+  width: 80%;
+  max-width: 600px;
+  height: 80%;
+  max-height: 600px;
+  /* Caminho relativo: sai da pasta 'style' (..) e entra em 'imagens' */
+  background-image: url('../imagens/logo-azul.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.sidebar-direita {
-  width: 50%;
-  height: 100vh;
-  background: #FFFFFF;
-  color: #000;
-  padding: 20px;
-  position: relative;
-  overflow-x: hidden;
+/* --- LADO DIREITO (FORMULÁRIO) --- */
+.container-wrapper {
+  width: 30%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* Removi o justify-content: center para controlar melhor no mobile */
 }
 
-.form-acesso {
-  margin-top: 40px;
-  color: #000;
+.container-superior,
+.container-inferior {
+  width: 100%;
+  padding: 40px;
 }
 
-.form-acesso h2,
-.cadastro-barra h2 {
-  margin-bottom: 15px;
-  font-size: 22px;
+.container-superior {
+  flex: 1; /* Ocupa o espaço restante */
+  background: #f5f5f5;
+  color: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza verticalmente */
+}
+
+.container-inferior {
+  background-color: #e0e0e0; /* Um pouco mais escuro para diferenciar */
+  color: #070707;
+  text-align: center;
+  padding: 30px;
+}
+
+/* --- ESTILOS DO FORMULÁRIO --- */
+.form-acesso h2 {
+  margin-bottom: 25px;
+  font-size: 24px;
+  color: #333;
 }
 
 .form-acesso label,
 .cadastro-barra label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
 }
 
 .form-acesso input,
 .cadastro-barra input {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 2px solid #ccc;
-  border-radius: 5px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   font-size: 16px;
+  background-color: #fff;
 }
 
 .form-acesso button,
 .cadastro-barra button {
-  padding: 10px 20px;
+  width: 100%;
+  padding: 12px;
   background-color: #0c0c0c;
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.form-acesso button:hover {
-  background-color: #0056b3;
+.form-acesso button:hover,
+.cadastro-barra button:hover {
+  background-color: #333;
 }
 
 .link-primeiro-acesso {
-  margin-top: 15px;
-  font-size: 16px;
-  color: #0a7aea;
+  font-size: 22px;
+  color: #1abc9c; /* Usando a cor tema */
   cursor: pointer;
-  text-decoration: underline;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.link-primeiro-acesso:hover {
+    text-decoration: underline;
 }
 
+
+/* --- BARRA LATERAL DE CADASTRO --- */
 .cadastro-barra {
-  position: absolute;
+  position: fixed;
   top: 0;
-  right: -100%;
-  width: 100%;
+  right: -100%; /* Esconde completamente */
+  width: 400px; /* Largura fixa melhor que porcentagem aqui */
+  max-width: 100%;
   height: 100%;
   background-color: #ffffff;
-  padding: 20px;
-  box-shadow: -2px 0 5px #000;
-  transition: right 0.5s ease;
-  z-index: 10;
+  padding: 30px;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+  transition: right 0.4s ease-in-out;
+  z-index: 100;
+  overflow-y: auto; /* Permite rolar se o cadastro for longo */
 }
 
-.cadastro-barra button {
-  margin-right: 10px;
-  background-color: #0d0e0d;
+.cadastro-barra.ativo {
+  right: 0;
 }
 
+.cadastro-barra h2 {
+    margin-bottom: 25px;
+    color: #333;
+}
 
 .btn-fechar {
-  background-color: #dc3545;
+  background-color: transparent !important;
+  color: #666 !important;
+  border: 1px solid #ccc !important;
+  margin-top: 10px;
+}
+.btn-fechar:hover {
+    background-color: #f0f0f0 !important;
+    color: #333 !important;
 }
 
-.btn-fechar:hover {
-  background-color: #c82333;
+
+/* --- RESPONSIVIDADE (CELULAR) --- */
+@media (max-width: 768px) {
+  .sidebar-esquerda {
+    display: none; /* Esconde o logo em telas pequenas */
+  }
+
+  .container-wrapper {
+    width: 100%; /* O formulário ocupa 100% */
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .container-superior {
+    padding: 30px 20px;
+    justify-content: center;
+  }
+
+  .container-inferior {
+      padding: 20px;
+  }
+
+  .cadastro-barra {
+      width: 100%; /* Barra de cadastro ocupa a tela toda no celular */
+  }
 }
