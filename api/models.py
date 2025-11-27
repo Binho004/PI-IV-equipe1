@@ -1,5 +1,6 @@
+from flask_login import UserMixin
 from database import db
-from datetime import datetime, timedelta # <--- ADICIONADO: timedelta
+from datetime import datetime, timedelta
 
 # Tabela de associação
 tabela_curtidas = db.Table('curtidas_assoc',
@@ -7,7 +8,7 @@ tabela_curtidas = db.Table('curtidas_assoc',
     db.Column('postagem_id', db.Integer, db.ForeignKey('postagens.id'), primary_key=True)
 )
 
-class Usuario(db.Model):
+class Usuario(db.Model, UserMixin): 
     __tablename__ = 'usuarios'
     id = db.Column(db.Integer, primary_key=True)
     nome_usuario = db.Column(db.String(100), nullable=False)

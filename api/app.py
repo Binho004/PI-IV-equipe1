@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template
 from flask_cors import CORS
+from flask_login import LoginManager
 from database import db
 from routes.auth_routes import auth_bp
 from routes.user_routes import user_bp
@@ -8,10 +9,21 @@ from routes.home_routes import home_bp
 from routes.chat_routes import chat_bp
 from routes.post_routes import post_bp
 from routes.search_routes import search_bp
+from models import Usuario
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
 
+# --- 3. CONFIGURAÇÃO DE SEGURANÇA (SESSÃO) ---
+app.secret_key = 'Ba12011705'
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'auth_bp.login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return Usuario.query.get(int(user_id))
 
 db_uri = 'sqlite:///mentor.db'
 
